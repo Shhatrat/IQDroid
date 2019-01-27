@@ -95,13 +95,13 @@ class IQDroid(
         }).share()
     }
 
-    fun sendMessage(device: IQDevice, iqApp: IQApp, data: Any): Observable<ConnectIQ.IQMessageStatus>{
+    fun sendMessage(device: IQDevice, iqApp: IQApp, data: Any): Single<ConnectIQ.IQMessageStatus>{
         if (currentSdkState != InitResponse.OnSdkReady)
-            return Observable.error(IQError(currentSdkState as InitResponse.OnInitializeError))
+            return Single.error(IQError(currentSdkState as InitResponse.OnInitializeError))
 
-        return Observable.create{ emitter ->
+        return Single.create{ emitter ->
             connectIQ.sendMessage(device, iqApp, data
-            ) { _, _, status -> emitter.onNext(status) }
+            ) { _, _, status -> emitter.onSuccess(status) }
         }
     }
 
