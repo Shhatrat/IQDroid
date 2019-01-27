@@ -58,22 +58,16 @@ class IQDroid(private val context: Context){
 
     fun getConnectedDevicesAsRx() = getKnownDevicesAsRx().filter { it.status == IQDevice.IQDeviceStatus.CONNECTED }
 
-    fun getStatusOfDevice(device: IQDevice): Observable<IQDevice.IQDeviceStatus>{
-     if(currentSdkState != InitResponse.OnSdkReady)
-         throw IQError(currentSdkState as InitResponse.OnInitializeError)
+    fun getStatusOfDevice(device: IQDevice): Observable<IQDevice.IQDeviceStatus> {
+        if (currentSdkState != InitResponse.OnSdkReady)
+            return Observable.error(IQError(currentSdkState as InitResponse.OnInitializeError))
 
-     lateinit var response:ObservableEmitter<IQDevice.IQDeviceStatus>
-     val responseSingle = Observable.create(ObservableOnSubscribe<IQDevice.IQDeviceStatus> { emitter -> response = emitter })
-    responseSingle.doOnDispose {
-        connectIQ.unregisterForDeviceEvents(device)
-    }
-//        responseSingle.doOnComplete {
-//            connectIQ.unregisterForDeviceEvents(device)
-//        }
-     connectIQ.registerForDeviceEvents(device) { _, event ->
-         response.onNext(event)
-     }
-    return responseSingle
+        return Observable.create(ObservableOnSubscribe<IQDevice.IQDeviceStatus> { emitter ->
+            connectIQ.registerForDeviceEvents(device) { _, event ->
+                emitter.onNext(event)
+            }
+        }).share()
+            .doOnDispose { connectIQ.unregisterForDeviceEvents(device) }
     }
 
 }
