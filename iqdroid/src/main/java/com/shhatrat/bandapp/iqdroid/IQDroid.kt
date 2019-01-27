@@ -95,7 +95,58 @@ class IQDroid(
         }).share()
     }
 
-    fun sendMessage(device: IQDevice, iqApp: IQApp, data: Any): Single<ConnectIQ.IQMessageStatus>{
+    fun sendMessage(device: IQDevice, iqApp: IQApp, data: String): Single<ConnectIQ.IQMessageStatus>{
+        if (currentSdkState != InitResponse.OnSdkReady)
+            return Single.error(IQError(currentSdkState as InitResponse.OnInitializeError))
+
+        return Single.create{ emitter ->
+            connectIQ.sendMessage(device, iqApp, data
+            ) { _, _, status -> emitter.onSuccess(status) }
+        }
+    }
+
+    fun sendMessage(device: IQDevice, iqApp: IQApp, data: Boolean): Single<ConnectIQ.IQMessageStatus>{
+        if (currentSdkState != InitResponse.OnSdkReady)
+            return Single.error(IQError(currentSdkState as InitResponse.OnInitializeError))
+
+        return Single.create{ emitter ->
+            connectIQ.sendMessage(device, iqApp, data
+            ) { _, _, status -> emitter.onSuccess(status) }
+        }
+    }
+
+    fun sendMessage(device: IQDevice, iqApp: IQApp, data: Int): Single<ConnectIQ.IQMessageStatus>{
+        if (currentSdkState != InitResponse.OnSdkReady)
+            return Single.error(IQError(currentSdkState as InitResponse.OnInitializeError))
+
+        return Single.create{ emitter ->
+            connectIQ.sendMessage(device, iqApp, data
+            ) { _, _, status -> emitter.onSuccess(status) }
+        }
+    }
+    @JvmName("sendMessageListString")
+    fun sendMessage(device: IQDevice, iqApp: IQApp, data: List<String>): Single<ConnectIQ.IQMessageStatus>{
+        if (currentSdkState != InitResponse.OnSdkReady)
+            return Single.error(IQError(currentSdkState as InitResponse.OnInitializeError))
+
+        return Single.create{ emitter ->
+            connectIQ.sendMessage(device, iqApp, data
+            ) { _, _, status -> emitter.onSuccess(status) }
+        }
+    }
+    @JvmName("sendMessageListInt")
+    fun sendMessage(device: IQDevice, iqApp: IQApp,  data: List<Int>): Single<ConnectIQ.IQMessageStatus>{
+        if (currentSdkState != InitResponse.OnSdkReady)
+            return Single.error(IQError(currentSdkState as InitResponse.OnInitializeError))
+
+        return Single.create{ emitter ->
+            connectIQ.sendMessage(device, iqApp, data
+            ) { _, _, status -> emitter.onSuccess(status) }
+        }
+    }
+
+    @JvmName("sendMessageListBoolean")
+    fun sendMessage(device: IQDevice, iqApp: IQApp,  data: List<Boolean>): Single<ConnectIQ.IQMessageStatus>{
         if (currentSdkState != InitResponse.OnSdkReady)
             return Single.error(IQError(currentSdkState as InitResponse.OnInitializeError))
 
