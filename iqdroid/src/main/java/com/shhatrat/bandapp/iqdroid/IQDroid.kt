@@ -1,13 +1,19 @@
 package com.shhatrat.bandapp.iqdroid
 
 import android.content.Context
+import android.util.Log
 import com.garmin.android.connectiq.ConnectIQ
+import com.garmin.android.connectiq.IQApp
 import com.garmin.android.connectiq.IQDevice
 import com.shhatrat.bandapp.iqdroid.enums.IQError
 import com.shhatrat.bandapp.iqdroid.enums.InitResponse
 import io.reactivex.*
 
-class IQDroid(private val context: Context){
+class IQDroid(
+    private val context: Context,
+    private val connectionType:ConnectIQ.IQConnectType = ConnectIQ.IQConnectType.WIRELESS,
+    private val applictionId: String){
+
 
     private var connectIQ: ConnectIQ = ConnectIQ.getInstance(context, ConnectIQ.IQConnectType.WIRELESS)
     private lateinit var currentSdkState: InitResponse
@@ -70,4 +76,47 @@ class IQDroid(private val context: Context){
             .doOnDispose { connectIQ.unregisterForDeviceEvents(device) }
     }
 
+    /**
+     * to test
+     */
+    fun getAppInfo(device: IQDevice, openIQStore: Boolean = false):Observable<IQApp> {
+        if (currentSdkState != InitResponse.OnSdkReady)
+            return Observable.error(IQError(currentSdkState as InitResponse.OnInitializeError))
+
+        return Observable.create(ObservableOnSubscribe<IQApp>{ emitter ->
+            connectIQ.getApplicationInfo(applictionId, device, object : ConnectIQ.IQApplicationInfoListener{
+                override fun onApplicationInfoReceived(app: IQApp) {
+                    emitter.onNext(app)
+                }
+
+                override fun onApplicationNotInstalled(p0: String?) {
+                    emitter.onError(Throwable(p0))
+                    if(openIQStore)
+                        connectIQ.openStore(applictionId)
+                }
+            })
+        }).share()
+    }
+
+    fun sendMessage(device: IQDevice, iqApp: IQApp, data: Object): Observable<ConnectIQ.IQMessageStatus>{
+        if (currentSdkState != InitResponse.OnSdkReady)
+            return Observable.error(IQError(currentSdkState as InitResponse.OnInitializeError))
+
+        return Observable.create{ emitter ->
+            connectIQ.sendMessage(device, iqApp, data
+            ) { _, _, status -> emitter.onNext(status) }
+        }
+    }
+
+    fun getAppMessages(device: IQDevice, iqApp: IQApp): Observable<Pair<MutableList<Any>, ConnectIQ.IQMessageStatus>>? {
+        if (currentSdkState != InitResponse.OnSdkReady)
+            return Observable.error(IQError(currentSdkState as InitResponse.OnInitializeError))
+
+        return Observable.create(ObservableOnSubscribe<Pair<MutableList<Any>, ConnectIQ.IQMessageStatus>> { emitter ->
+            connectIQ.registerForAppEvents(device, iqApp
+            ) { _, _, data, status -> emitter.onNext(Pair(data,status)) }
+        }).share()
+            .doOnDispose { connectIQ.unregisterForApplicationEvents(device, iqApp) }
+
+    }
 }
