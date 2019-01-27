@@ -76,9 +76,6 @@ class IQDroid(
             .doOnDispose { connectIQ.unregisterForDeviceEvents(device) }
     }
 
-    /**
-     * to test
-     */
     fun getAppInfo(device: IQDevice, openIQStore: Boolean = false):Observable<IQApp> {
         if (currentSdkState != InitResponse.OnSdkReady)
             return Observable.error(IQError(currentSdkState as InitResponse.OnInitializeError))
@@ -98,7 +95,7 @@ class IQDroid(
         }).share()
     }
 
-    fun sendMessage(device: IQDevice, iqApp: IQApp, data: Object): Observable<ConnectIQ.IQMessageStatus>{
+    fun sendMessage(device: IQDevice, iqApp: IQApp, data: Any): Observable<ConnectIQ.IQMessageStatus>{
         if (currentSdkState != InitResponse.OnSdkReady)
             return Observable.error(IQError(currentSdkState as InitResponse.OnInitializeError))
 
