@@ -8,6 +8,7 @@ sealed class InitResponse{
         object GCM_NOT_INSTALLED : OnInitializeError()
         object GCM_UPGRADE_NEEDED : OnInitializeError()
         object SERVICE_ERROR : OnInitializeError()
+        object OnApplicationNotInstalled: OnInitializeError()
     }
 
 }

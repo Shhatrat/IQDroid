@@ -14,8 +14,7 @@ class IQDroid(
     private val connectionType:ConnectIQ.IQConnectType = ConnectIQ.IQConnectType.WIRELESS,
     private val applictionId: String){
 
-
-    private var connectIQ: ConnectIQ = ConnectIQ.getInstance(context, ConnectIQ.IQConnectType.WIRELESS)
+    private var connectIQ: ConnectIQ = ConnectIQ.getInstance(context, connectionType)
     private lateinit var currentSdkState: InitResponse
 
     fun initConnectIq(): Single<InitResponse>{
@@ -76,20 +75,20 @@ class IQDroid(
             .doOnDispose { connectIQ.unregisterForDeviceEvents(device) }
     }
 
-    fun getAppInfo(device: IQDevice, openIQStore: Boolean = false):Observable<IQApp> {
+    fun getAppInfo(device: IQDevice, appId: String = applictionId,   openIQStore: Boolean = false):Observable<IQApp> {
         if (currentSdkState != InitResponse.OnSdkReady)
             return Observable.error(IQError(currentSdkState as InitResponse.OnInitializeError))
 
         return Observable.create(ObservableOnSubscribe<IQApp>{ emitter ->
-            connectIQ.getApplicationInfo(applictionId, device, object : ConnectIQ.IQApplicationInfoListener{
+            connectIQ.getApplicationInfo(appId, device, object : ConnectIQ.IQApplicationInfoListener{
                 override fun onApplicationInfoReceived(app: IQApp) {
                     emitter.onNext(app)
                 }
 
                 override fun onApplicationNotInstalled(p0: String?) {
-                    emitter.onError(Throwable(p0))
+                    emitter.onError(IQError(InitResponse.OnInitializeError.OnApplicationNotInstalled))
                     if(openIQStore)
-                        connectIQ.openStore(applictionId)
+                        connectIQ.openStore(appId)
                 }
             })
         }).share()
