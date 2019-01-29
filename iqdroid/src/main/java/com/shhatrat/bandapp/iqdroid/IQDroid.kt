@@ -19,28 +19,28 @@ class IQDroid(
     val raw by lazy { Raw(connectIQ, applictionId, currentSdkState) }
 
     fun initConnectIq(): Single<InitResponse>{
-        lateinit var response:SingleEmitter<InitResponse>
-        val responseSingle = Single.create(SingleOnSubscribe<InitResponse> { emitter -> response = emitter })
-
-        connectIQ.initialize(context, true, object :ConnectIQ.ConnectIQListener{
-            override fun onSdkShutDown() {
-                currentSdkState = InitResponse.OnInitializeError.OnSdkShutDown
-                response.onSuccess(currentSdkState)
-            }
-
-            override fun onInitializeError(p0: ConnectIQ.IQSdkErrorStatus?) {
-                when(p0){
-                    ConnectIQ.IQSdkErrorStatus.GCM_NOT_INSTALLED -> {currentSdkState = InitResponse.OnInitializeError.GCM_NOT_INSTALLED}
-                    ConnectIQ.IQSdkErrorStatus.GCM_UPGRADE_NEEDED -> {currentSdkState = InitResponse.OnInitializeError.GCM_UPGRADE_NEEDED}
-                    ConnectIQ.IQSdkErrorStatus.SERVICE_ERROR -> {currentSdkState = InitResponse.OnInitializeError.SERVICE_ERROR}
+        val responseSingle = Single.create(SingleOnSubscribe<InitResponse> {
+            connectIQ.initialize(context, true, object :ConnectIQ.ConnectIQListener{
+                override fun onSdkShutDown() {
+                    currentSdkState = InitResponse.OnInitializeError.OnSdkShutDown
+                    it.onSuccess(currentSdkState)
                 }
-                response.onError(IQError(currentSdkState as InitResponse.OnInitializeError))
-            }
 
-            override fun onSdkReady() {
-                currentSdkState = InitResponse.OnSdkReady
-                response.onSuccess(currentSdkState)
-            }
+                override fun onInitializeError(p0: ConnectIQ.IQSdkErrorStatus?) {
+                    when(p0){
+                        ConnectIQ.IQSdkErrorStatus.GCM_NOT_INSTALLED -> {currentSdkState = InitResponse.OnInitializeError.GCM_NOT_INSTALLED}
+                        ConnectIQ.IQSdkErrorStatus.GCM_UPGRADE_NEEDED -> {currentSdkState = InitResponse.OnInitializeError.GCM_UPGRADE_NEEDED}
+                        ConnectIQ.IQSdkErrorStatus.SERVICE_ERROR -> {currentSdkState = InitResponse.OnInitializeError.SERVICE_ERROR}
+                    }
+                    it.onError(IQError(currentSdkState as InitResponse.OnInitializeError))
+                }
+
+                override fun onSdkReady() {
+                    currentSdkState = InitResponse.OnSdkReady
+                    it.onSuccess(currentSdkState)
+                }
+            })
+
         })
         return responseSingle
     }

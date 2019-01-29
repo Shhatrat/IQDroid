@@ -16,6 +16,8 @@ class Raw(private val connectIQ: ConnectIQ,
           private val applictionId: String,
           private val currentSdkState: InitResponse){
 
+    fun getAppFromFirstDevice()= getKnownDevicesAsRx().flatMap { getAppInfo(it, applictionId,false) }.firstOrError()
+
     fun getKnownDevices(): List<IQDevice>{
         if(currentSdkState == InitResponse.OnSdkReady)
             return connectIQ.knownDevices
