@@ -128,6 +128,17 @@ class Raw(private val connectIQ: ConnectIQ,
         }
     }
 
+    fun sendMessage(device: IQDevice, iqApp: IQApp, data: Map<Any, Any>): Single<ConnectIQ.IQMessageStatus> {
+        if (currentSdkState != InitResponse.OnSdkReady)
+            return Single.error(IQError(currentSdkState as InitResponse.OnInitializeError))
+
+        return Single.create{ emitter ->
+            connectIQ.sendMessage(device, iqApp, data
+            ) { _, _, status -> emitter.onSuccess(status) }
+        }
+    }
+
+
     fun getAppMessages(device: IQDevice, iqApp: IQApp): Observable<Pair<MutableList<Any>, ConnectIQ.IQMessageStatus>>? {
         if (currentSdkState != InitResponse.OnSdkReady)
             return Observable.error(IQError(currentSdkState as InitResponse.OnInitializeError))
