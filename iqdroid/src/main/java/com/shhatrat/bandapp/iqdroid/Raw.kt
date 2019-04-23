@@ -138,7 +138,7 @@ class Raw(private val connectIQ: ConnectIQ,
         }
     }
 
-    fun getAppMessages(device: IQDevice, iqApp: IQApp): Observable<Pair<MutableList<Any>, ConnectIQ.IQMessageStatus>>? {
+    fun getAppMessages(device: IQDevice, iqApp: IQApp): Observable<Pair<MutableList<Any>, ConnectIQ.IQMessageStatus>> {
         if (currentSdkState != InitResponse.OnSdkReady)
             return Observable.error(IQError(currentSdkState as InitResponse.OnInitializeError))
 

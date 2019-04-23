@@ -11,6 +11,16 @@ sealed class InitResponse{
         object OnApplicationNotInstalled: OnInitializeError()
     }
 
+    override fun toString(): String {
+        return when (this) {
+            OnSdkReady -> "OnSdkReady"
+            OnInitializeError.GCM_NOT_INSTALLED -> "GCM_NOT_INSTALLED"
+            OnInitializeError.GCM_UPGRADE_NEEDED -> "GCM_UPGRADE_NEEDED"
+            OnInitializeError.SERVICE_ERROR -> "SERVICE_ERROR"
+            OnInitializeError.OnApplicationNotInstalled -> "OnApplicationNotInstalled"
+            else -> super.toString()
+        }
+    }
 }
 
 class IQError(val error: InitResponse.OnInitializeError): Error()

@@ -1,13 +1,10 @@
 package com.shhatrat.bandapp.iqdroid
 
 import android.content.Context
-import android.util.Log
 import com.garmin.android.connectiq.ConnectIQ
-import com.garmin.android.connectiq.IQApp
-import com.garmin.android.connectiq.IQDevice
 import com.shhatrat.bandapp.iqdroid.enums.IQError
 import com.shhatrat.bandapp.iqdroid.enums.InitResponse
-import io.reactivex.*
+import io.reactivex.Single
 
 class IQDroid(
     private val context: Context,
@@ -19,29 +16,31 @@ class IQDroid(
     val raw by lazy { Raw(connectIQ, applictionId, currentSdkState) }
 
     fun initConnectIq(): Single<InitResponse>{
-        val responseSingle = Single.create(SingleOnSubscribe<InitResponse> {
-            connectIQ.initialize(context, true, object :ConnectIQ.ConnectIQListener{
+        return Single.create {
+            connectIQ.initialize(context, true, object : ConnectIQ.ConnectIQListener {
                 override fun onSdkShutDown() {
                     currentSdkState = InitResponse.OnInitializeError.OnSdkShutDown
                     it.onSuccess(currentSdkState)
                 }
-
                 override fun onInitializeError(p0: ConnectIQ.IQSdkErrorStatus?) {
-                    when(p0){
-                        ConnectIQ.IQSdkErrorStatus.GCM_NOT_INSTALLED -> {currentSdkState = InitResponse.OnInitializeError.GCM_NOT_INSTALLED}
-                        ConnectIQ.IQSdkErrorStatus.GCM_UPGRADE_NEEDED -> {currentSdkState = InitResponse.OnInitializeError.GCM_UPGRADE_NEEDED}
-                        ConnectIQ.IQSdkErrorStatus.SERVICE_ERROR -> {currentSdkState = InitResponse.OnInitializeError.SERVICE_ERROR}
+                    when (p0) {
+                        ConnectIQ.IQSdkErrorStatus.GCM_NOT_INSTALLED -> {
+                            currentSdkState = InitResponse.OnInitializeError.GCM_NOT_INSTALLED
+                        }
+                        ConnectIQ.IQSdkErrorStatus.GCM_UPGRADE_NEEDED -> {
+                            currentSdkState = InitResponse.OnInitializeError.GCM_UPGRADE_NEEDED
+                        }
+                        ConnectIQ.IQSdkErrorStatus.SERVICE_ERROR -> {
+                            currentSdkState = InitResponse.OnInitializeError.SERVICE_ERROR
+                        }
                     }
                     it.onError(IQError(currentSdkState as InitResponse.OnInitializeError))
                 }
-
                 override fun onSdkReady() {
                     currentSdkState = InitResponse.OnSdkReady
                     it.onSuccess(currentSdkState)
                 }
             })
-
-        })
-        return responseSingle
+        }
     }
 }
