@@ -5,6 +5,8 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.garmin.android.connectiq.ConnectIQ
+import com.garmin.android.connectiq.IQApp
+import com.garmin.android.connectiq.IQDevice
 import com.shhatrat.iqdroid.IQDroid
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -16,6 +18,8 @@ class MainActivity : AppCompatActivity() {
 
     var receiveDisposable: Disposable? = null
     lateinit var connectIq: IQDroid
+    lateinit var device: IQDevice
+    lateinit var app: IQApp
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,7 +35,14 @@ class MainActivity : AppCompatActivity() {
         initBtn.setOnClickListener {
             connectIq.initConnectIq().subscribe({
                 it.toString().toast()
-                containerLL.visibility = View.VISIBLE
+                device = connectIq.raw.getKnownDevices().first()
+                connectIq.raw.getAppInfo(device).subscribe({
+                    app = it
+                    containerLL.visibility = View.VISIBLE
+                }, {
+                    it.message?.toast()
+                })
+
             }, {
                 it.message?.toast()
             })
@@ -43,9 +54,6 @@ class MainActivity : AppCompatActivity() {
         }
 
         sendAbcBtn.setOnClickListener {
-            val device = connectIq.raw.getKnownDevices().first()
-            val app = connectIq.raw.getAppInfo(device).blockingFirst()
-
             connectIq.raw.sendMessage(device, app, "ABC")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -67,9 +75,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setReceive() {
-        val device = connectIq.raw.getKnownDevices().first()
-        val app = connectIq.raw.getAppInfo(device).blockingFirst()
-
         receiveDisposable = connectIq.raw.getAppMessages(device, app)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
