@@ -1,11 +1,11 @@
-package com.shhatrat.bandapp.iqdroidexample
+package com.shhatrat.iqdroidexample
 
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.garmin.android.connectiq.ConnectIQ
-import com.shhatrat.bandapp.iqdroid.IQDroid
+import com.shhatrat.iqdroid.IQDroid
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers

@@ -1,4 +1,4 @@
-package com.shhatrat.bandapp.iqdroid.enums
+package com.shhatrat.iqdroid.enums
 
 sealed class InitResponse{
     object OnSdkReady: InitResponse()
