@@ -149,4 +149,15 @@ class Raw(private val connectIQ: ConnectIQ,
             .doOnDispose { connectIQ.unregisterForApplicationEvents(device, iqApp) }
 
     }
+
+    fun openApp(device: IQDevice, iqApp: IQApp): Single<ConnectIQ.IQOpenApplicationStatus> {
+        if (currentSdkState != InitResponse.OnSdkReady)
+            return Single.error(IQError(currentSdkState as InitResponse.OnInitializeError))
+
+        return Single.create{ emitter ->
+            connectIQ.openApplication(device, iqApp)
+            { _, _, status -> emitter.onSuccess(status) }
+        }
+    }
+
 }

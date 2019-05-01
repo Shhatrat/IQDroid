@@ -64,6 +64,17 @@ class MainActivity : AppCompatActivity() {
                 })
         }
 
+        openApp.setOnClickListener {
+            connectIq.raw.openApp(device, app)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    it.name.toast()
+                }, {
+                    it.message?.toast()
+                })
+        }
+
         receiveSw.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
                 if (receiveDisposable?.isDisposed == true || receiveDisposable == null)
