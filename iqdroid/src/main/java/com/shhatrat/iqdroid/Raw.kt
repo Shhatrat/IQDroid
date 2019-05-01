@@ -67,6 +67,11 @@ class Raw(private val connectIQ: ConnectIQ,
         }).share()
     }
 
+    /**
+     * Probably you get error FAILURE_DURING_TRANSFER.
+     * This is SDK error, more info here:
+     * https://forums.garmin.com/forum/developers/connect-iq/connect-iq-bug-reports/158068-failure_during_transfer-issue-again-now-using-comm-sample
+     */
     fun sendMessage(device: IQDevice, iqApp: IQApp, data: String): Single<ConnectIQ.IQMessageStatus> {
         if (currentSdkState != InitResponse.OnSdkReady)
             return Single.error(IQError(currentSdkState as InitResponse.OnInitializeError))
@@ -77,6 +82,11 @@ class Raw(private val connectIQ: ConnectIQ,
         }
     }
 
+    /**
+     * Probably you get error FAILURE_DURING_TRANSFER.
+     * This is SDK error, more info here:
+     * https://forums.garmin.com/forum/developers/connect-iq/connect-iq-bug-reports/158068-failure_during_transfer-issue-again-now-using-comm-sample
+     */
     fun sendMessage(device: IQDevice, iqApp: IQApp, data: Boolean): Single<ConnectIQ.IQMessageStatus> {
         if (currentSdkState != InitResponse.OnSdkReady)
             return Single.error(IQError(currentSdkState as InitResponse.OnInitializeError))
@@ -87,6 +97,11 @@ class Raw(private val connectIQ: ConnectIQ,
         }
     }
 
+    /**
+     * Probably you get error FAILURE_DURING_TRANSFER.
+     * This is SDK error, more info here:
+     * https://forums.garmin.com/forum/developers/connect-iq/connect-iq-bug-reports/158068-failure_during_transfer-issue-again-now-using-comm-sample
+     */
     fun sendMessage(device: IQDevice, iqApp: IQApp, data: Int): Single<ConnectIQ.IQMessageStatus> {
         if (currentSdkState != InitResponse.OnSdkReady)
             return Single.error(IQError(currentSdkState as InitResponse.OnInitializeError))
@@ -96,6 +111,12 @@ class Raw(private val connectIQ: ConnectIQ,
             ) { _, _, status -> emitter.onSuccess(status) }
         }
     }
+
+    /**
+     * Probably you get error FAILURE_DURING_TRANSFER.
+     * This is SDK error, more info here:
+     * https://forums.garmin.com/forum/developers/connect-iq/connect-iq-bug-reports/158068-failure_during_transfer-issue-again-now-using-comm-sample
+     */
     @JvmName("sendMessageListString")
     fun sendMessage(device: IQDevice, iqApp: IQApp, data: List<String>): Single<ConnectIQ.IQMessageStatus> {
         if (currentSdkState != InitResponse.OnSdkReady)
@@ -106,6 +127,12 @@ class Raw(private val connectIQ: ConnectIQ,
             ) { _, _, status -> emitter.onSuccess(status) }
         }
     }
+
+    /**
+     * Probably you get error FAILURE_DURING_TRANSFER.
+     * This is SDK error, more info here:
+     * https://forums.garmin.com/forum/developers/connect-iq/connect-iq-bug-reports/158068-failure_during_transfer-issue-again-now-using-comm-sample
+     */
     @JvmName("sendMessageListInt")
     fun sendMessage(device: IQDevice, iqApp: IQApp, data: List<Int>): Single<ConnectIQ.IQMessageStatus> {
         if (currentSdkState != InitResponse.OnSdkReady)
@@ -117,6 +144,11 @@ class Raw(private val connectIQ: ConnectIQ,
         }
     }
 
+    /**
+     * Probably you get error FAILURE_DURING_TRANSFER.
+     * This is SDK error, more info here:
+     * https://forums.garmin.com/forum/developers/connect-iq/connect-iq-bug-reports/158068-failure_during_transfer-issue-again-now-using-comm-sample
+     */
     @JvmName("sendMessageListBoolean")
     fun sendMessage(device: IQDevice, iqApp: IQApp, data: List<Boolean>): Single<ConnectIQ.IQMessageStatus> {
         if (currentSdkState != InitResponse.OnSdkReady)
@@ -128,6 +160,11 @@ class Raw(private val connectIQ: ConnectIQ,
         }
     }
 
+    /**
+     * Probably you get error FAILURE_DURING_TRANSFER.
+     * This is SDK error, more info here:
+     * https://forums.garmin.com/forum/developers/connect-iq/connect-iq-bug-reports/158068-failure_during_transfer-issue-again-now-using-comm-sample
+     */
     fun sendMessage(device: IQDevice, iqApp: IQApp, data: Map<Any, Any>): Single<ConnectIQ.IQMessageStatus> {
         if (currentSdkState != InitResponse.OnSdkReady)
             return Single.error(IQError(currentSdkState as InitResponse.OnInitializeError))
