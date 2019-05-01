@@ -2,8 +2,8 @@ package com.shhatrat.iqdroid
 
 import android.content.Context
 import com.garmin.android.connectiq.ConnectIQ
-import com.shhatrat.iqdroid.enums.IQError
-import com.shhatrat.iqdroid.enums.InitResponse
+import com.shhatrat.iqdroid.model.IQError
+import com.shhatrat.iqdroid.model.InitResponse
 import io.reactivex.Single
 
 class IQDroid(

@@ -3,8 +3,8 @@ package com.shhatrat.iqdroid
 import com.garmin.android.connectiq.ConnectIQ
 import com.garmin.android.connectiq.IQApp
 import com.garmin.android.connectiq.IQDevice
-import com.shhatrat.iqdroid.enums.IQError
-import com.shhatrat.iqdroid.enums.InitResponse
+import com.shhatrat.iqdroid.model.IQError
+import com.shhatrat.iqdroid.model.InitResponse
 import io.reactivex.Observable
 import io.reactivex.ObservableOnSubscribe
 import io.reactivex.Single
