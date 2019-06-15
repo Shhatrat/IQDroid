@@ -1,9 +1,8 @@
-package com.shhatrat.iqdroid
+package com.shhatrat.iqdroid.iqData
 
 import com.google.gson.Gson
 import com.shhatrat.iqdroid.model.WebBody
 import fi.iki.elonen.NanoHTTPD
-import java.util.*
 
 class Web(port: Int) : NanoHTTPD(port) {
 

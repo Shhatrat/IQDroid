@@ -10,6 +10,7 @@ import com.garmin.android.connectiq.IQApp
 import com.garmin.android.connectiq.IQDevice
 import com.shhatrat.iqdroid.IQDroid
 import com.shhatrat.iqdroid.model.DataResponse
+import com.shhatrat.iqdroid.model.IQRequestType
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
@@ -29,7 +30,7 @@ class MainActivity : AppCompatActivity() {
 
         connectIq = IQDroid(
             this,
-            ConnectIQ.IQConnectType.TETHERED,
+            ConnectIQ.IQConnectType.WIRELESS,
             "bc7cc261ea9846c9b796a2ddffdd4485"
         )
 
@@ -84,6 +85,22 @@ class MainActivity : AppCompatActivity() {
             } else {
                 receiveDisposable?.dispose()
             }
+        }
+
+        bbb.setOnClickListener {
+            connectIq.iqDataManager.addType(IQRequestType.BATTERY)
+            connectIq.iqDataManager.getData(device, app)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    it.toString().log()
+                }, {
+                    it.message?.log()
+
+                })
+        }
+        ddd.setOnClickListener {
+            connectIq.iqDataManager.addType(IQRequestType.GPS)
         }
     }
 

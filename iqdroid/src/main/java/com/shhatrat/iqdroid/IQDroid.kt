@@ -2,6 +2,8 @@ package com.shhatrat.iqdroid
 
 import android.content.Context
 import com.garmin.android.connectiq.ConnectIQ
+import com.shhatrat.iqdroid.iqData.IQDataManager
+import com.shhatrat.iqdroid.iqData.Web
 import com.shhatrat.iqdroid.model.IQError
 import com.shhatrat.iqdroid.model.InitResponse
 import io.reactivex.Single
@@ -14,6 +16,7 @@ class IQDroid(
     private lateinit var currentSdkState: InitResponse
 
     val raw by lazy { Raw(connectIQ, applictionId, currentSdkState) }
+    val iqDataManager by lazy { IQDataManager(raw, Web(8000)) }
 
     fun initConnectIq(): Single<InitResponse>{
         return Single.create {
