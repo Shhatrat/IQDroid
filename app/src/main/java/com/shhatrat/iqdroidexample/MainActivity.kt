@@ -1,6 +1,7 @@
 package com.shhatrat.iqdroidexample
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -8,6 +9,7 @@ import com.garmin.android.connectiq.ConnectIQ
 import com.garmin.android.connectiq.IQApp
 import com.garmin.android.connectiq.IQDevice
 import com.shhatrat.iqdroid.IQDroid
+import com.shhatrat.iqdroid.model.DataResponse
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
@@ -28,7 +30,7 @@ class MainActivity : AppCompatActivity() {
         connectIq = IQDroid(
             this,
             ConnectIQ.IQConnectType.TETHERED,
-            "59768915c5f84417bd35f456ef34a888"
+            "bc7cc261ea9846c9b796a2ddffdd4485"
         )
 
 
@@ -91,6 +93,8 @@ class MainActivity : AppCompatActivity() {
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
                 "${it.first} <--> ${it.second}".toast()
+                "${it.first} <--> ${it.second}".log()
+                val data = DataResponse.parse(it)
             }, {
                 it.message?.toast()
             })
@@ -98,5 +102,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun String.toast() {
         Toast.makeText(this@MainActivity, this, Toast.LENGTH_SHORT).show()
+    }
+    private fun String.log() {
+        Log.d("IQDroid" , this)
     }
 }
