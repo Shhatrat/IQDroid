@@ -27,13 +27,11 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
         connectIq = IQDroid(
             this,
             ConnectIQ.IQConnectType.WIRELESS,
             "bc7cc261ea9846c9b796a2ddffdd4485"
         )
-
 
         initBtn.setOnClickListener {
             connectIq.initConnectIq().subscribe({
@@ -86,9 +84,23 @@ class MainActivity : AppCompatActivity() {
                 receiveDisposable?.dispose()
             }
         }
-
-        bbb.setOnClickListener {
+        getDataWithStateBtn.setOnClickListener {
+            connectIq.iqDataManager.addType(IQRequestType.GPS)
             connectIq.iqDataManager.addType(IQRequestType.BATTERY)
+            connectIq.iqDataManager.getDataWithConnectionState(device, app)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    it.toString().log()
+                }, {
+                    it.message?.log()
+                })
+
+        }
+
+        getDataBtn.setOnClickListener {
+            connectIq.iqDataManager.addType(IQRequestType.BATTERY)
+            connectIq.iqDataManager.addType(IQRequestType.GPS)
             connectIq.iqDataManager.getData(device, app)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -98,9 +110,6 @@ class MainActivity : AppCompatActivity() {
                     it.message?.log()
 
                 })
-        }
-        ddd.setOnClickListener {
-            connectIq.iqDataManager.addType(IQRequestType.GPS)
         }
     }
 

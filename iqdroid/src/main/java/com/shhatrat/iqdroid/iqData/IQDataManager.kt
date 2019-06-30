@@ -32,6 +32,29 @@ class IQDataManager(private val raw: Raw, private val web: Web) {
             web.start()
     }
 
+    fun getDataWithConnectionState(device: IQDevice, app: IQApp): Observable<DataResponse> {
+
+        raw.getAppMessages(device, app).map { DataResponse.parse(it) }.firstElement().subscribe()
+
+        val dataObs: Observable<DataResponse> =
+            raw.getAppMessages(device, app).map { DataResponse.parse(it) }
+        val statusObs: Observable<IQDevice.IQDeviceStatus> = raw.getStatusOfDevice(device)
+            .mergeWith(Observable.just(IQDevice.IQDeviceStatus.CONNECTED))
+
+        val list = listOf(dataObs, statusObs)
+
+        return Observable
+            .combineLatest(list) { it }
+            .switchMap {
+                val status = it[1] as IQDevice.IQDeviceStatus
+                val data = it[0] as DataResponse
+                if (status == IQDevice.IQDeviceStatus.NOT_CONNECTED)
+                    Observable.error<DataResponse>(Exception(IQDevice.IQDeviceStatus.NOT_CONNECTED.name))
+                else
+                    Observable.just(data)
+            }
+    }
+
     fun getData(device: IQDevice, app: IQApp): Observable<DataResponse> {
         return raw.getAppMessages(device, app)
             .map { DataResponse.parse(it) }

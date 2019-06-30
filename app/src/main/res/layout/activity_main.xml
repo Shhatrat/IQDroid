@@ -14,16 +14,22 @@
             android:id="@+id/initBtn" android:layout_marginTop="8dp"
             app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="8dp" app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"/>
+
     <Button
-            android:text="Button"
+            android:id="@+id/getDataBtn"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" android:id="@+id/bbb"
-            tools:layout_editor_absoluteX="8dp" app:layout_constraintBottom_toBottomOf="@+id/containerLL"/>
+            android:layout_height="wrap_content"
+            android:text="get data "
+            app:layout_constraintBottom_toBottomOf="@+id/containerLL"
+            tools:layout_editor_absoluteX="8dp" />
+
     <Button
-            android:text="Button"
+            android:id="@+id/getDataWithStateBtn"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" android:id="@+id/ddd"
-            tools:layout_editor_absoluteX="8dp" app:layout_constraintBottom_toTopOf="@+id/bbb"/>
+            android:layout_height="wrap_content"
+            android:text="get data with dev state"
+            app:layout_constraintBottom_toTopOf="@+id/getDataBtn"
+            tools:layout_editor_absoluteX="8dp" />
     <LinearLayout
             android:orientation="vertical"
             android:layout_width="0dp"
