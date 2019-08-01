@@ -1,5 +1,5 @@
 package com.shhatrat.iqdroid.model
 
 enum class IQRequestType {
-    GPS, BATTERY
+    GPS, BATTERY, HEART_RATE, CADENCE
 }
