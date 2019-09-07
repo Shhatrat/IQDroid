@@ -15,6 +15,7 @@ data class DataResponse(
     val speed: Float?,
     val temperature: Float?,
     val pressure: Float?,
+    val time: Int?,
     val other: String?
 ) {
 
@@ -37,6 +38,7 @@ data class DataResponse(
                     get(IQRequestType.SPEED.name) as Float?,
                     get(IQRequestType.TEMPERATURE.name) as Float?,
                     get(IQRequestType.PRESSURE.name) as Float?,
+                    get(IQRequestType.TIME.name) as Int?,
                     get(IQRequestType.OTHER.name) as String?
                 )
             }

@@ -13,5 +13,6 @@ enum class IQRequestType {
     SPEED,
     TEMPERATURE,
     PRESSURE,
-    OTHER
+    OTHER,
+    TIME
 }

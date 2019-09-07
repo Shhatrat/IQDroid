@@ -137,6 +137,15 @@
                 app:layout_constraintBottom_toTopOf="@+id/gpsSwitch"
                 app:layout_constraintTop_toBottomOf="@+id/speedSwitch" />
 
+            <Switch
+                android:id="@+id/timeSwitch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:text="time"
+                app:layout_constraintBottom_toTopOf="@+id/gpsSwitch"
+                app:layout_constraintTop_toBottomOf="@+id/speedSwitch" />
+
         </LinearLayout>
     </ScrollView>
 

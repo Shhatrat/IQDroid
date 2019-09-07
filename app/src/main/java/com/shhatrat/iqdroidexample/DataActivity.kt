@@ -101,6 +101,13 @@ class DataActivity : ListActivity() {
             )
         }
 
+        timeSwitch.setOnCheckedChangeListener { _, checked ->
+            changeState(
+                IQRequestType.TIME,
+                checked
+            )
+        }
+
         dataSwitch.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
                 data?.dispose()
