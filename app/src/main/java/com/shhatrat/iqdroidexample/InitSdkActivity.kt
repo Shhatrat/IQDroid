@@ -49,6 +49,7 @@ class InitSdkActivity : ListActivity() {
                     addToList("status= ${it.status}")
                     addToList("version= ${it.version()}")
                     openNextButton.visibility = View.VISIBLE
+                    okButton.visibility = View.GONE
                 }, {
                     addToList("error= ${it.message}")
                     addToList("error= ${it.localizedMessage}")
