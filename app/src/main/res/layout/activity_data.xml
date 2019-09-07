@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.shhatrat.iqdroidexample.DataActivity">
+
+    <ScrollView
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:text="Button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:orientation="vertical"
+            android:layout_height="match_parent">
+
+            <Switch
+                android:id="@+id/gpsSwitch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:text="gps"
+                app:layout_constraintBottom_toTopOf="@+id/batterySwitch"
+                app:layout_constraintTop_toBottomOf="@+id/temperatureSwitch" />
+
+            <Switch
+                android:id="@+id/batterySwitch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:text="Battery"
+                app:layout_constraintBottom_toTopOf="@+id/hrSwitch"
+                app:layout_constraintTop_toBottomOf="@+id/gpsSwitch" />
+
+            <Switch
+                android:id="@+id/hrSwitch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:text="heart rate"
+                app:layout_constraintBottom_toTopOf="@+id/cadenceSwitch"
+                app:layout_constraintTop_toBottomOf="@+id/batterySwitch" />
+
+            <Switch
+                android:id="@+id/cadenceSwitch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:text="cadence"
+                app:layout_constraintBottom_toTopOf="@+id/accelSwitch"
+                app:layout_constraintTop_toBottomOf="@+id/hrSwitch" />
+
+            <Switch
+                android:id="@+id/accelSwitch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:text="accel"
+                app:layout_constraintBottom_toTopOf="@+id/altitudeSwitch"
+                app:layout_constraintTop_toBottomOf="@+id/cadenceSwitch" />
+
+            <Switch
+                android:id="@+id/altitudeSwitch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:text="altitude"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/accelSwitch" />
+
+            <Switch
+                android:id="@+id/headingSwitch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:text="heading"
+                app:layout_constraintBottom_toTopOf="@+id/magSwitch"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Switch
+                android:id="@+id/magSwitch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:text="mag"
+                app:layout_constraintBottom_toTopOf="@+id/powerSwitch"
+                app:layout_constraintTop_toBottomOf="@+id/headingSwitch" />
+
+            <Switch
+                android:id="@+id/powerSwitch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:text="power"
+                app:layout_constraintBottom_toTopOf="@+id/speedSwitch"
+                app:layout_constraintTop_toBottomOf="@+id/magSwitch" />
+
+            <Switch
+                android:id="@+id/speedSwitch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:text="speed"
+                app:layout_constraintBottom_toTopOf="@+id/temperatureSwitch"
+                app:layout_constraintTop_toBottomOf="@+id/powerSwitch" />
+
+            <Switch
+                android:id="@+id/temperatureSwitch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:text="temperature"
+                app:layout_constraintBottom_toTopOf="@+id/gpsSwitch"
+                app:layout_constraintTop_toBottomOf="@+id/speedSwitch" />
+
+            <Switch
+                android:id="@+id/pressureSwitch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:text="pressure"
+                app:layout_constraintBottom_toTopOf="@+id/gpsSwitch"
+                app:layout_constraintTop_toBottomOf="@+id/speedSwitch" />
+
+            <Switch
+                android:id="@+id/otherSwitch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:text="other"
+                app:layout_constraintBottom_toTopOf="@+id/gpsSwitch"
+                app:layout_constraintTop_toBottomOf="@+id/speedSwitch" />
+
+        </LinearLayout>
+    </ScrollView>
+
+    <Switch
+        android:id="@+id/dataWithStatusSwitch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Data with status"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/button2"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Switch
+        android:id="@+id/dataSwitch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Data"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/button2"
+        app:layout_constraintTop_toBottomOf="@+id/dataWithStatusSwitch" />
+
+    <ListView
+        android:id="@+id/loglistView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="Button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/button2"
+        app:layout_constraintTop_toBottomOf="@+id/dataSwitch"
+        app:layout_constraintVertical_bias="0.494" />
+</androidx.constraintlayout.widget.ConstraintLayout>
