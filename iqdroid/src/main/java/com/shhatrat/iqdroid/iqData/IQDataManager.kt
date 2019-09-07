@@ -12,9 +12,15 @@ import java.util.*
 class IQDataManager(private val raw: Raw, private val web: Web) {
 
     private val setOfIQRequests = mutableSetOf<IQRequestType>()
+    private var other = ""
 
     fun addType(type: IQRequestType){
         setOfIQRequests.add(type)
+        updateWeb()
+    }
+
+    fun addOther(data: String) {
+        other = data
         updateWeb()
     }
 
@@ -26,7 +32,9 @@ class IQDataManager(private val raw: Raw, private val web: Web) {
     private fun updateWeb(){
         web.setData(WebBody(
             Date().time,
-            setOfIQRequests.toList())
+            setOfIQRequests.toList(),
+            other
+        )
         )
         if (!web.wasStarted())
             web.start()
