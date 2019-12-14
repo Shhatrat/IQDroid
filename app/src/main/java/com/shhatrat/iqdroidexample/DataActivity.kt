@@ -27,6 +27,10 @@ class DataActivity : ListActivity() {
             getExampleApp().connectIq.iqDataManager.remove(item)
     }
 
+    fun changeScreensState(checked: Boolean){
+        getExampleApp().connectIq.iqDataManager.showScreens(checked)
+    }
+
     fun setListeners() {
         gpsSwitch.setOnCheckedChangeListener { _, checked ->
             changeState(
@@ -104,6 +108,11 @@ class DataActivity : ListActivity() {
         timeSwitch.setOnCheckedChangeListener { _, checked ->
             changeState(
                 IQRequestType.TIME,
+                checked
+            )
+        }
+        screenSwitch.setOnCheckedChangeListener { _, checked ->
+            changeScreensState(
                 checked
             )
         }
