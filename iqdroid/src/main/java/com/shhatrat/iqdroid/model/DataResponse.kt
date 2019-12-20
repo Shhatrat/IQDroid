@@ -16,7 +16,8 @@ data class DataResponse(
     val temperature: Float?,
     val pressure: Float?,
     val time: Int?,
-    val other: String?
+    val other: String?,
+    val screens: HashMap<String,String>?
 ) {
 
     companion object {
@@ -39,7 +40,8 @@ data class DataResponse(
                     get(IQRequestType.TEMPERATURE.name) as Float?,
                     get(IQRequestType.PRESSURE.name) as Float?,
                     get(IQRequestType.TIME.name) as Int?,
-                    get(IQRequestType.OTHER.name) as String?
+                    get(IQRequestType.OTHER.name) as String?,
+                    get(IQRequestType.SCREENS.name) as HashMap<String,String>?
                 )
             }
         }

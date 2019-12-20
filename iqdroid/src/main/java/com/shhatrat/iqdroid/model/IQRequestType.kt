@@ -14,5 +14,6 @@ enum class IQRequestType {
     TEMPERATURE,
     PRESSURE,
     OTHER,
-    TIME
+    TIME,
+    SCREENS
 }
