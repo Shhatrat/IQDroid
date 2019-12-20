@@ -64,17 +64,13 @@ class IQDataManager(private val raw: Raw, private val web: Web) {
         val screen2 = Screen.Builder().description("TEST 2").build()
         val screen1Id = ScreenManager.addScreen(screen1)
         val screen2Id = ScreenManager.addScreen(screen2)
-        repeat(40){
-            val sss = ScreenManager.addScreen(Screen.Builder().description("TEST $it").build())
-            ScreenManager.addScreenItem(sss, IqScreenItem.Text(60, 60, 16711680, 16776960, 4, "ho ho ho", 1))
-        }
-        ScreenManager.addScreenToKey(screen1Id, screen2Id, ScreenManager.KEY.DOWN, 1)
+        ScreenManager.addExitToKey(screen1Id, ScreenManager.KEY.DOWN)
         ScreenManager.addScreenToKey(screen1Id, screen2Id, ScreenManager.KEY.UP, 1)
         ScreenManager.addScreenToKey(screen2Id, screen1Id, ScreenManager.KEY.DOWN, 1)
         ScreenManager.addScreenToKey(screen2Id, screen1Id, ScreenManager.KEY.UP, 1)
-        ScreenManager.addScreenItem(screen1Id, IqScreenItem.Text(60, 60, 16711680, 16776960, 4, "ho ho ho", 1))
-        ScreenManager.addScreenItem(screen1Id, IqScreenItem.Text(120, 120, 16711680, 16776960, 3, "ppp", 1))
-        ScreenManager.addScreenItem(screen2Id, IqScreenItem.Text(80, 80, 16711680, 16776960, 3, "inne 2234", 1))
+        ScreenManager.addScreenItem(screen1Id, IqScreenItem.Text(60, 60, 16711680, 16776960, 4, "text1", 1))
+        ScreenManager.addScreenItem(screen1Id, IqScreenItem.Text(120, 120, 16711680, 16776960, 3, "text2", 1))
+        ScreenManager.addScreenItem(screen2Id, IqScreenItem.Text(80, 80, 16711680, 16776960, 3, "text3", 1))
     }
 
     fun getDataWithConnectionState(device: IQDevice, app: IQApp): Observable<DataResponse> {
