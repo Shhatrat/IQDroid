@@ -1,7 +1,5 @@
 package com.shhatrat.iqdroid.screen
 
-import android.util.Log
-import com.google.gson.Gson
 import com.shhatrat.iqdroid.screen.android.Navigation
 import com.shhatrat.iqdroid.screen.android.Screen
 import com.shhatrat.iqdroid.screen.android.Screen.Companion.NO_ID
@@ -31,14 +29,14 @@ object ScreenManager{
         screenMap.remove(screenId)
     }
 
-    fun addScreenToKey(screen: Screen, screenToKey: Screen, key: KEY, transition: Int?){
+    fun addScreenToKey(screen: Screen, screenToKey: Screen, key: KEY){
         val item = screenMap[screen.id]
-        item?.navigation?.put(key.keyCode, Navigation(addScreen(screenToKey), key.keyCode, transition))
+        item?.navigation?.put(key.keyCode, Navigation(addScreen(screenToKey), key.keyCode))
     }
 
     fun addExitToKey(screen: Screen, key: KEY){
         val item = screenMap[screen.id]
-        item?.navigation?.put(key.keyCode, Navigation(Screen.getExitScreen(), key.keyCode, 0))
+        item?.navigation?.put(key.keyCode, Navigation(Screen.getExitScreen(), key.keyCode))
     }
 
     fun removeScreenToKey(screen: Screen, key: KEY){

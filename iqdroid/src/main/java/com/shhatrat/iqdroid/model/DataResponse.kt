@@ -41,9 +41,16 @@ data class DataResponse(
                     get(IQRequestType.PRESSURE.name) as Float?,
                     get(IQRequestType.TIME.name) as Int?,
                     get(IQRequestType.OTHER.name) as String?,
-                    get(IQRequestType.SCREENS.name) as HashMap<String,String>?
+                    getScreenValue(this)
                 )
             }
+        }
+
+        private fun getScreenValue(hashMap: java.util.HashMap<*, *>): java.util.HashMap<String, String>? {
+            val data = hashMap[IQRequestType.SCREENS.name]
+            return if(data is HashMap<*, *>){
+                data as java.util.HashMap<String, String>?
+            }else hashMapOf()
         }
     }
 }

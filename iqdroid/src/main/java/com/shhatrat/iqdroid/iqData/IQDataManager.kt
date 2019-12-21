@@ -52,7 +52,7 @@ class IQDataManager(private val raw: Raw, private val web: Web) {
         screensEnable = enable
     }
 
-    fun getScreens(): List<IqScreen> {
+    private fun getScreens(): List<IqScreen> {
         if (screensEnable) {
             addScreens()
         }
@@ -65,9 +65,9 @@ class IQDataManager(private val raw: Raw, private val web: Web) {
         val screen1Id = ScreenManager.addScreen(screen1)
         val screen2Id = ScreenManager.addScreen(screen2)
         ScreenManager.addExitToKey(screen1Id, ScreenManager.KEY.DOWN)
-        ScreenManager.addScreenToKey(screen1Id, screen2Id, ScreenManager.KEY.UP, 1)
-        ScreenManager.addScreenToKey(screen2Id, screen1Id, ScreenManager.KEY.DOWN, 1)
-        ScreenManager.addScreenToKey(screen2Id, screen1Id, ScreenManager.KEY.UP, 1)
+        ScreenManager.addScreenToKey(screen1Id, screen2Id, ScreenManager.KEY.UP)
+        ScreenManager.addScreenToKey(screen2Id, screen1Id, ScreenManager.KEY.DOWN)
+        ScreenManager.addScreenToKey(screen2Id, screen1Id, ScreenManager.KEY.UP)
         ScreenManager.addScreenItem(screen1Id, IqScreenItem.Text(60, 60, 16711680, 16776960, 4, "text1", 1))
         ScreenManager.addScreenItem(screen1Id, IqScreenItem.Text(120, 120, 16711680, 16776960, 3, "text2", 1))
         ScreenManager.addScreenItem(screen2Id, IqScreenItem.Text(80, 80, 16711680, 16776960, 3, "text3", 1))

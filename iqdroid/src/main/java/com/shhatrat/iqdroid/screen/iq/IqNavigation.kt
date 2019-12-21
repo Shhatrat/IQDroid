@@ -7,9 +7,7 @@ data class IqNavigation(
     @SerializedName("i")
     val id: Int,
     @SerializedName("k")
-    val keyCode :Int,
-    @SerializedName("t")
-    val transition: Int?){
+    val keyCode :Int){
     constructor(navigation: Navigation)
-            : this(navigation.screen.id, navigation.keyCode, navigation.transition)
+            : this(navigation.screen.id, navigation.keyCode)
 }
