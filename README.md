@@ -44,9 +44,9 @@ fun addOther(data: String)
 
 ### ScreenManager
 `ScreenManager` is attempt to create 100% responsive IQ app without coding in monkey-c. There are 3 main concepts:
- - IqScreen
- - IqScreenItem
- - IqNavigation
+ - Screen. `Screen` is something like `View`. It can contains multiple `ScreenItem` and `Navigation` objects. Every Screen should have uniqe `id`
+ - ScreenItem. It is smallest part of layout (text, line). It is draw automatically when `Screen` is appear. Every `ScreenItem` have information about position, color and some additional data connected with special type (for example circle has radius field). 
+ - Navigation. Contains information about `Screen` and `KeyCode`. If proper `KeyCode` is pressed library automatically change `Screen`.
 ### Receiver
 If you want notify android app when IQ app is started you can use `BroadcastReceiver`.
 
