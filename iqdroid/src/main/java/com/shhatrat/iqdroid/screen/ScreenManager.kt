@@ -15,7 +15,6 @@ object ScreenManager{
     private val screenMap: MutableMap<Int, Screen> = mutableMapOf()
 
     fun addScreen(screen: Screen): Screen {
-
         val screenWithId =
             if(screen.id==NO_ID)
                 screen.addId(generateNewId())
@@ -27,6 +26,10 @@ object ScreenManager{
 
     fun removeScreen(screenId: Int){
         screenMap.remove(screenId)
+    }
+
+    fun removeAllScreens(){
+        screenMap.clear()
     }
 
     fun addScreenToKey(screen: Screen, screenToKey: Screen, key: KEY){

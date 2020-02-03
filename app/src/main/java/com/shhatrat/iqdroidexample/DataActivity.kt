@@ -2,6 +2,9 @@ package com.shhatrat.iqdroidexample
 
 import android.os.Bundle
 import com.shhatrat.iqdroid.model.IQRequestType
+import com.shhatrat.iqdroid.screen.ScreenManager
+import com.shhatrat.iqdroid.screen.android.Screen
+import com.shhatrat.iqdroid.screen.iq.IqScreenItem
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
@@ -28,8 +31,26 @@ class DataActivity : ListActivity() {
     }
 
     fun changeScreensState(checked: Boolean){
-        getExampleApp().connectIq.iqDataManager.showScreens(checked)
+        if(checked)
+            addScreens()
+        else
+            ScreenManager.removeAllScreens()
     }
+
+    private fun addScreens(){
+        val screen1 = Screen.Builder().description("TEST 1").build()
+        val screen2 = Screen.Builder().description("TEST 2").build()
+        val screen1Id = ScreenManager.addScreen(screen1)
+        val screen2Id = ScreenManager.addScreen(screen2)
+        ScreenManager.addExitToKey(screen1Id, ScreenManager.KEY.DOWN)
+        ScreenManager.addScreenToKey(screen1Id, screen2Id, ScreenManager.KEY.UP)
+        ScreenManager.addScreenToKey(screen2Id, screen1Id, ScreenManager.KEY.DOWN)
+        ScreenManager.addScreenToKey(screen2Id, screen1Id, ScreenManager.KEY.UP)
+        ScreenManager.addScreenItem(screen1Id, IqScreenItem.Text(60, 60, 16711680, 16776960, 4, "text1", 1))
+        ScreenManager.addScreenItem(screen1Id, IqScreenItem.Text(120, 120, 16711680, 16776960, 3, "text2", 1))
+        ScreenManager.addScreenItem(screen2Id, IqScreenItem.Text(80, 80, 16711680, 16776960, 3, "text3", 1))
+    }
+
 
     fun setListeners() {
         gpsSwitch.setOnCheckedChangeListener { _, checked ->
