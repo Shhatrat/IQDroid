@@ -16,6 +16,7 @@ import java.util.*
 class IQDataManager(private val raw: Raw, private val web: Web) {
 
     private val setOfIQRequests = mutableSetOf<IQRequestType>()
+    private val listOfIQScreens = mutableListOf<IqScreen>()
     private var other = ""
 
     fun addType(type: IQRequestType) {
@@ -26,6 +27,11 @@ class IQDataManager(private val raw: Raw, private val web: Web) {
     fun addOther(data: String) {
         other = data
         updateWeb()
+    }
+
+    fun addIQScreens(items: List<IqScreen>){
+        listOfIQScreens.clear()
+        items.forEach { listOfIQScreens.add(it) }
     }
 
     fun remove(type: IQRequestType) {
@@ -39,7 +45,7 @@ class IQDataManager(private val raw: Raw, private val web: Web) {
                 Date().time,
                 setOfIQRequests.toList(),
                 other,
-                getScreens()
+                listOfIQScreens
             )
         )
         if (!web.wasStarted())
@@ -50,27 +56,6 @@ class IQDataManager(private val raw: Raw, private val web: Web) {
 
     fun showScreens(enable: Boolean) {
         screensEnable = enable
-    }
-
-    private fun getScreens(): List<IqScreen> {
-        if (screensEnable) {
-            addScreens()
-        }
-        return ScreenManager.getCurrentJson()
-    }
-
-    private fun addScreens(){
-        val screen1 = Screen.Builder().description("TEST 1").build()
-        val screen2 = Screen.Builder().description("TEST 2").build()
-        val screen1Id = ScreenManager.addScreen(screen1)
-        val screen2Id = ScreenManager.addScreen(screen2)
-        ScreenManager.addExitToKey(screen1Id, ScreenManager.KEY.DOWN)
-        ScreenManager.addScreenToKey(screen1Id, screen2Id, ScreenManager.KEY.UP)
-        ScreenManager.addScreenToKey(screen2Id, screen1Id, ScreenManager.KEY.DOWN)
-        ScreenManager.addScreenToKey(screen2Id, screen1Id, ScreenManager.KEY.UP)
-        ScreenManager.addScreenItem(screen1Id, IqScreenItem.Text(60, 60, 16711680, 16776960, 4, "text1", 1))
-        ScreenManager.addScreenItem(screen1Id, IqScreenItem.Text(120, 120, 16711680, 16776960, 3, "text2", 1))
-        ScreenManager.addScreenItem(screen2Id, IqScreenItem.Text(80, 80, 16711680, 16776960, 3, "text3", 1))
     }
 
     fun getDataWithConnectionState(device: IQDevice, app: IQApp): Observable<DataResponse> {
