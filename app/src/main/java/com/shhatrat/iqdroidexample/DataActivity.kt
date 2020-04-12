@@ -49,6 +49,7 @@ class DataActivity : ListActivity() {
         ScreenManager.addScreenItem(screen1Id, IqScreenItem.Text(60, 60, 16711680, 16776960, 4, "text1", 1))
         ScreenManager.addScreenItem(screen1Id, IqScreenItem.Text(120, 120, 16711680, 16776960, 3, "text2", 1))
         ScreenManager.addScreenItem(screen2Id, IqScreenItem.Text(80, 80, 16711680, 16776960, 3, "text3", 1))
+        getExampleApp().connectIq.iqDataManager.addIQScreens(ScreenManager.getCurrentJson())
     }
 
 

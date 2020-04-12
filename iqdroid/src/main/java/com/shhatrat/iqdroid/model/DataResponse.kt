@@ -21,8 +21,13 @@ data class DataResponse(
 ) {
 
     companion object {
+
+        private val HELLO_MESSAGE = "hello IQDroid"
+
         fun parse(pair: Pair<MutableList<Any>, ConnectIQ.IQMessageStatus>): DataResponse? {
             if (pair.second != ConnectIQ.IQMessageStatus.SUCCESS)
+                return null
+            if(pair.first[0] == HELLO_MESSAGE)
                 return null
 
             with(pair.first[0] as HashMap<*, *>) {
