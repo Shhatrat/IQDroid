@@ -47,6 +47,33 @@ fun addOther(data: String)
  - Screen. `Screen` is something like `View`. It can contains multiple `ScreenItem` and `Navigation` objects. Every Screen should have uniqe `id`
  - ScreenItem. It is smallest part of layout (text, line). It is draw automatically when `Screen` is appear. Every `ScreenItem` have information about position, color and some additional data connected with special type (for example circle has radius field). 
  - Navigation. Contains information about `Screen` and `KeyCode`. If proper `KeyCode` is pressed library automatically change `Screen`.
+ 
+ ## Usage
+ Firstly, you have to create `Screen` object with `Screen.Builder()`. 
+```
+val screen = Screen.Builder().description("data screen").build()
+```
+Add it into `ScreenManager`
+```
+val screenWithId = ScreenManager.addScreen(screen1)
+``` 
+Now we have `Screen` object with uniq ID.
+
+### Navigation
+This is only way to exit from screen flow.
+```
+ScreenManager.addExitToKey(screenWithId, ScreenManager.KEY.DOWN)
+```
+Adding navigation between Screen1 -> Screen2
+```
+ScreenManager.addScreenToKey(screenWithId1, screenWithId2, ScreenManager.KEY.UP)
+```
+Removing navigation 
+```
+ScreenManager.removeScreenToKey(screenWithId1, ScreenManager.KEY.UP)
+```
+
+
 ### Receiver
 If you want notify android app when IQ app is started you can use `BroadcastReceiver`.
 
