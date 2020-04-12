@@ -72,8 +72,36 @@ Removing navigation
 ```
 ScreenManager.removeScreenToKey(screenWithId1, ScreenManager.KEY.UP)
 ```
-
-
+### ScreenItem
+There are several types of `ScreenItem`, similar to native IQ Items:
+- Text
+- Line
+- RectangleRounded
+- Rectangle
+- Circle
+- Eclipse
+- Background
+example of creating text object:
+```
+val textScreenItem = IqScreenItem.Text(80, 80, 16711680, 16776960, 3, "text", 1)
+```
+Adding `ScreenItem` to `Screen`:
+```
+ScreenManager.addScreenItem(screenWithId, textScreenItem)
+```
+Removing `ScreenItem` from `Screen`:
+```
+ScreenManager.removeScreenItem(screenWithId, textScreenItem)
+```
+### Other
+Removing all `Screens`
+```
+ScreenManager.removeAllScreens()
+```
+Setting screen's data to device:
+```
+connectIq.iqDataManager.addIQScreens(ScreenManager.getCurrentJson())
+```
 ### Receiver
 If you want notify android app when IQ app is started you can use `BroadcastReceiver`.
 
