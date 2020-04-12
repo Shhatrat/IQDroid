@@ -5,6 +5,19 @@ Android library for easy intergation with monkey-c devices.
 Library for monkey-c: https://github.com/Shhatrat/IQDroid-garmin
 
 Download aar: [debug](https://github.com/Shhatrat/IQDroid/raw/master/bin/iqdroid-debug.aar), [release](https://github.com/Shhatrat/IQDroid/raw/master/bin/iqdroid-release.aar)
+
+Download with gradle:
+```
+ allprojects {
+		repositories {
+			...
+			maven { url 'https://jitpack.io' }
+		}
+	}
+```
+```
+implementation 'com.github.Shhatrat:IQDroid:1.2.0'
+```
 # Main goals:
 - wrapping garmin's library with RxJava2
 - easy access to garmin's data
